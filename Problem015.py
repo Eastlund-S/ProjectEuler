@@ -6,7 +6,7 @@ exactly 6 routes to the bottom right corner.
 How many such routes are there through a 20x20 grid?
 """
 
-import numpy as np
+import math
 
 
 def main():
@@ -16,8 +16,7 @@ def main():
     # This problem is solved by doing a binomial distribution of ( n )
     #                                                            ( k )
     # where n is x + y and k is x
-    number_of_routes = (np.math.factorial(n)) / \
-                       ((np.math.factorial(k))*(np.math.factorial(n - k)))
+    number_of_routes = (math.factorial(n)) / ((math.factorial(k))*(math.factorial(n - k)))
     print(number_of_routes)
 
 
