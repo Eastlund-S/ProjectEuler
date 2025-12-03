@@ -26,9 +26,35 @@ bool is_prime(int k, std::list<double> prime_list)
     return true;
 }
 
+int first_attempt()
+{
+    double value = { 13195 };
+    double largest_prime = { 0 };
+    std::list<double> prime_list = { 2 };
+    for (float i = { 3 }; i <= (std::sqrt(value)); i++)
+    {
+        if (is_prime(i, prime_list))
+        {
+            std::cout << i << " is prime." << std::endl;
+            prime_list.push_back(i);
+            double division_result = { 0 };
+            division_result = value / i;
+            if (is_integer(division_result))
+            {
+                std::cout << i << " is a prime factor of " << value << std::endl;
+                largest_prime = i;
+            }
+        }
+
+    }
+    std::cout << "\nFinished, largest prime factor is " << largest_prime;
+
+    return 0;
+}
+
 int main()
 {
-    double value = { 600851475143 };
+    double value = { 13195 };
     double largest_prime = { 0 };
     std::list<double> prime_list = { 2 };
     for (float i = { 3 }; i <= (std::sqrt(value)); i++)
