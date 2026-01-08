@@ -12,9 +12,7 @@ What is the millionth lexicographic permutation of the digits
 
 """
 
-import numpy as np
 from itertools import permutations
-
 
 def main():
     perms = permutations(range(10))
