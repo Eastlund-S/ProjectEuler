@@ -2,6 +2,7 @@
 Main holder for project Euler solutions for Python.main
 """
 
+import cProfile
 from datetime import datetime
 from fractions import Fraction
 from itertools import permutations
@@ -190,6 +191,8 @@ def problem_34():
 
 def is_prime(number: int) -> bool:
     """Tests if a number is a prime number."""
+    if number == 2:
+        return True
     if number < 0:
         number = -number
     lim = ceil(sqrt(number)) + 1
@@ -199,7 +202,7 @@ def is_prime(number: int) -> bool:
     return True
 
 def is_circular_prime(number: int) -> bool:
-    """Tests if a number is circular"""
+    """Tests if a number is circular and prime"""
     list_num = list(str(number))
     for index in range(len(list_num)):
         first_digit = list_num.pop(0)
@@ -210,7 +213,7 @@ def is_circular_prime(number: int) -> bool:
     return True
 
 def problem_35():
-    """Docstring for problem_35
+    """My solution for problem_35
 
     The number, 197, is called a circular prime because all rotations of the
     digits: 197, 971, and 719, are themselves prime.
@@ -230,6 +233,82 @@ def problem_35():
             # print(number)
     print(len(circular_primes))
 
+def palindrome(to_check: str) -> bool:
+    """Checks if a string is a palindrome and returns a boolean value"""
+    string = str(to_check)
+    reversed_str = string[::-1]
+    if string == reversed_str:
+        return True
+    return False
+
+def problem_36():
+    """My solution for problem_36
+    
+    The decimal number, 585 == 1001001001 (binary), is palindromic in both
+    bases.
+
+    Find the sum of all numbers, less than one million, which are palindromic
+    in base 10 and base 2.
+
+    (Please note that the palindromic number, in either base, may not include
+    leading zeros.)
+
+    872187
+    """
+    palindromic = set()
+    for number in range(1, 1000000):
+        binary_num = bin(number)
+        # print(f"It is {palindrome(str(number))} that number {number} is a palindrome.")
+        # print(f"It is {palindrome(str(binary_num)[2:])} that number {binary_num} is a palindrome.")
+        if palindrome(str(number)):
+            if palindrome(str(binary_num)[2::]):
+                palindromic.add(number)
+    print(sum(palindromic))
+
+def iterate_truncations(number):
+    """Returns a list of possible left/right truncations for a given number"""
+    str_number = str(number)
+    truncatable_iterations = []
+    for index, value in enumerate(str_number):
+        test_number_left = str_number[index:]
+        if test_number_left is not None:
+            truncatable_iterations.append(int(test_number_left))
+        test_number_right = str_number[:-(index + 1)]
+        if test_number_right != '':
+            truncatable_iterations.append(int(test_number_right))
+    return truncatable_iterations
+
+def problem_37():
+    """My solution for problem 37
+    
+    The number 3797 has an interesting property. Being prime itself, it is
+    possible to continuously remove digits from left to right, and remain prime
+    at each stage: 3797, 797, 97, and 7. Similarly we can work from right to
+    left: 3797, 379, 37, and 3.
+
+    Find the sum of the only eleven primes that are both truncatable from left
+    to right and right to left.
+
+    NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
+
+    """
+    number = 3797
+    final_sum = 0
+    index = 1
+    for number in range(9137, 739397):
+        failed = False
+        # print(iterate_truncations(number=number))
+        for iteration in iterate_truncations(number=number):
+            if not is_prime(iteration):
+                failed = True
+                break
+        if not failed:
+            print(f"{number} is the {index}th truncatable prime")
+            final_sum += number
+            index += 1
+    print(final_sum)
+
 
 if __name__ == "__main__":
-    problem_35()
+    # cProfile.run('problem_35()')
+    problem_37()
